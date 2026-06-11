@@ -569,7 +569,26 @@ img {
         font-size: 1.1rem;
     }
     .product-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    .product-card {
+        padding: 1rem;
+    }
+    .product-title {
+        font-size: 1.1rem;
+    }
+    .product-desc {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+    .product-price {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+    .btn-whatsapp {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
     .nav-cta {
         padding: 0.4rem 0.8rem;
