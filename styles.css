@@ -571,4 +571,11 @@ img {
     .product-grid {
         grid-template-columns: 1fr;
     }
+    .nav-cta {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    .logo {
+        font-size: 1.4rem;
+    }
 }
