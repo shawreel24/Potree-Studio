@@ -49,10 +49,6 @@ const Cart = () => {
               <span style={{ color: 'var(--color-text-muted)' }}>Subtotal</span>
               <span>₹{cartTotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between" style={{ marginBottom: '1rem' }}>
-              <span style={{ color: 'var(--color-text-muted)' }}>Shipping</span>
-              <span>Calculated at checkout</span>
-            </div>
             <div className="flex justify-between" style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)', fontWeight: '600', fontSize: '1.1rem' }}>
               <span>Total</span>
               <span>₹{cartTotal.toFixed(2)}</span>
