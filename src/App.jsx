@@ -10,6 +10,7 @@ import Checkout from './pages/Checkout';
 import AdminOrders from './pages/AdminOrders';
 import AboutUs from './pages/AboutUs';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
@@ -20,6 +21,7 @@ function App() {
       <ProductProvider>
         <CartProvider>
           <Router basename={import.meta.env.BASE_URL}>
+            <ScrollToTop />
             <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <Navbar />
               <main style={{ flex: 1 }}>
