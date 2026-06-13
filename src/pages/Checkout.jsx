@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { getDeliveryZone } from '../data/deliveryZones';
 import { supabase } from '../lib/supabaseClient';
+import { assetUrl } from '../lib/assetUrl';
 
 const INDIAN_STATES = [
   'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -357,7 +358,7 @@ const Checkout = () => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
                 {cart.map((item) => (
                   <div key={item.id} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-                    <img src={item.image} alt={item.title} style={{ width: '56px', height: '68px', objectFit: 'cover', borderRadius: '4px', flexShrink: 0 }} />
+                    <img src={item.image?.startsWith('/assets/') ? assetUrl(item.image) : item.image} alt={item.title} style={{ width: '56px', height: '68px', objectFit: 'cover', borderRadius: '4px', flexShrink: 0 }} />
                     <div style={{ flex: 1 }}>
                       <p style={{ fontSize: '0.9rem', fontWeight: '500' }}>{item.title}</p>
                       <p style={{ fontSize: '0.8rem', color: '#888' }}>Qty: {item.quantity}</p>
