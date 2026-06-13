@@ -27,16 +27,17 @@ const Reviews = () => {
           Happy Customers
         </h2>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+        <div className="product-slider">
           {reviewsData.map((review) => (
-            <div key={review.id} style={{ 
+            <div key={review.id} className="product-slider-item" style={{ 
               backgroundColor: '#fff', 
               padding: '2.5rem', 
               borderRadius: '24px', 
               boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
               display: 'flex',
               flexDirection: 'column',
-              gap: '1.5rem'
+              gap: '1.5rem',
+              minWidth: '280px'
             }}>
               
               <div style={{ color: '#f7ced7' }}>
