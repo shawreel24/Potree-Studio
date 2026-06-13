@@ -12,6 +12,7 @@ const Navbar = () => {
         {/* Left Links */}
         <div className="nav-links flex items-center gap-lg">
           <Link to="/" style={{ fontSize: '0.9rem', fontWeight: '500', letterSpacing: '0.02em' }}>Home</Link>
+          <Link to="/about-us" style={{ fontSize: '0.9rem', fontWeight: '500', letterSpacing: '0.02em' }}>About Us</Link>
           {isAdmin && (
             <Link to="/admin/orders" style={{ fontSize: '0.9rem', fontWeight: '500', letterSpacing: '0.02em', color: '#c2410c' }}>Orders</Link>
           )}
