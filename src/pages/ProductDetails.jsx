@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import { Search } from 'lucide-react';
 import AdminProductForm from '../components/AdminProductForm';
+import { assetUrl } from '../lib/assetUrl';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -76,7 +77,7 @@ const ProductDetails = () => {
             <Search size={16} />
           </div>
           <img 
-            src={product.image} 
+            src={assetUrl(product.image)} 
             alt={product.title} 
             style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '2px', backgroundColor: '#f5f5f5' }}
           />
