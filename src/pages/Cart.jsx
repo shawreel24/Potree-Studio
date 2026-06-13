@@ -2,6 +2,7 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Trash2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { assetUrl } from '../lib/assetUrl';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -21,7 +22,11 @@ const Cart = () => {
           <div style={{ flex: '1 1 60%' }}>
             {cart.map((item) => (
               <div key={item.id} className="flex gap-md items-center" style={{ padding: '1.5rem 0', borderBottom: '1px solid var(--color-border)' }}>
-                <img src={item.image} alt={item.title} style={{ width: '100px', height: '120px', objectFit: 'cover', borderRadius: '2px' }} />
+                <img 
+                  src={item.image?.startsWith('/assets/') ? assetUrl(item.image) : item.image} 
+                  alt={item.title} 
+                  style={{ width: '100px', height: '120px', objectFit: 'cover', borderRadius: '2px' }} 
+                />
                 <div style={{ flex: 1 }}>
                   <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>{item.title}</h3>
                   <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>{item.price}</p>
