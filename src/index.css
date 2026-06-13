@@ -203,9 +203,22 @@ button {
 }
 
 /* Mobile Responsiveness */
+.mobile-only {
+  display: none;
+}
+.desktop-only {
+  display: flex;
+}
+
 @media (max-width: 768px) {
   .navbar .nav-links {
-    display: none; /* Mobile menu logic to be handled in React */
+    display: none;
+  }
+  .mobile-only {
+    display: flex;
+  }
+  .desktop-only {
+    display: none !important;
   }
   .container {
     padding: 0 var(--spacing-md);
