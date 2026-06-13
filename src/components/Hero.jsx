@@ -57,15 +57,44 @@ const Hero = () => {
       ))}
       
       <div className="relative flex flex-col items-center justify-center h-full text-center px-4" style={{ width: '100%', zIndex: 10, maxWidth: '800px' }}>
-        <h1 style={{ color: '#d75971', fontSize: '4.5rem', fontWeight: '600', fontFamily: 'var(--font-serif)', marginBottom: '1rem', lineHeight: '1.1' }}>
-          Blooming with<br />Joyful Colors.
-        </h1>
-        <p style={{ color: '#333', fontSize: '1.1rem', marginBottom: '2rem', maxWidth: '600px', fontWeight: '400' }}>
-          Discover whimsical, handcrafted pottery that brings the bright magic of a summer garden right into your home.
-        </p>
-        <Link to="/ceramics" className="btn" style={{ backgroundColor: '#d75971', color: '#fff', padding: '0.75rem 2rem', borderRadius: '50px', fontSize: '1rem', fontWeight: '500', letterSpacing: 'normal', textTransform: 'none', border: 'none' }}>
-          Explore the Garden
-        </Link>
+        <div style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.75)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          padding: '4rem 3rem',
+          borderRadius: '32px',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          maxWidth: '680px',
+          border: '1px solid rgba(255, 255, 255, 0.4)'
+        }}>
+          <h1 style={{ color: '#d75971', fontSize: '4.5rem', fontWeight: '600', fontFamily: 'var(--font-serif)', marginBottom: '1rem', lineHeight: '1.1' }}>
+            Blooming with<br />Joyful Colors.
+          </h1>
+          <p style={{ color: '#333', fontSize: '1.15rem', marginBottom: '2rem', maxWidth: '500px', fontWeight: '500', lineHeight: '1.6' }}>
+            Discover whimsical, handcrafted pottery that brings the bright magic of a summer garden right into your home.
+          </p>
+          <Link to="/ceramics" className="btn" style={{ 
+            backgroundColor: '#d75971', 
+            color: '#fff', 
+            padding: '0.85rem 2.5rem', 
+            borderRadius: '50px', 
+            fontSize: '1.05rem', 
+            fontWeight: '600', 
+            letterSpacing: 'normal', 
+            textTransform: 'none', 
+            border: 'none',
+            boxShadow: '0 8px 20px rgba(215, 89, 113, 0.3)',
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(215, 89, 113, 0.4)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(215, 89, 113, 0.3)'; }}
+          >
+            Explore the Garden
+          </Link>
+        </div>
       </div>
 
       {/* Side Arrows */}
