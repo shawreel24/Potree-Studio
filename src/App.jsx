@@ -19,7 +19,7 @@ function App() {
     <AuthProvider>
       <ProductProvider>
         <CartProvider>
-          <Router>
+          <Router basename={import.meta.env.BASE_URL}>
             <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
               <Navbar />
               <main style={{ flex: 1 }}>

@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { assetUrl } from '../lib/assetUrl';
 
 const slides = [
   {
-    image: '/assets/images/hero_image.png',
+    image: assetUrl('assets/images/hero_image.png'),
     title: 'Signature Ceramics',
     link: '/ceramics'
   },
   {
-    image: '/assets/images/hero_floral.png',
+    image: assetUrl('assets/images/hero_floral.png'),
     title: 'Summer Floral Collection',
     link: '/ceramics'
   },
   {
-    image: '/assets/images/about_pottery_hands.png',
+    image: assetUrl('assets/images/about_pottery_hands.png'),
     title: 'Pottery Classes',
     link: '/classes'
   }
