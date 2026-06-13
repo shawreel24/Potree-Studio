@@ -16,7 +16,6 @@ const Products = () => {
 
   return (
     <div className="container" style={{ paddingTop: 'calc(var(--nav-height) + 4rem)', paddingBottom: '4rem', minHeight: '100vh' }}>
-      <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '1rem' }}>Ceramics</h1>
       
       {isAdmin && (
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '2rem' }}>
