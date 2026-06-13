@@ -9,6 +9,7 @@ import PlaceholderPage from './pages/PlaceholderPage';
 import Checkout from './pages/Checkout';
 import AdminOrders from './pages/AdminOrders';
 import AboutUs from './pages/AboutUs';
+import Products from './pages/Products';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import { AuthProvider } from './context/AuthContext';
@@ -27,6 +28,7 @@ function App() {
               <main style={{ flex: 1 }}>
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/ceramics" element={<Products />} />
                   <Route path="/product/:id" element={<ProductDetails />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
