@@ -23,6 +23,8 @@ const slides = [
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -35,8 +37,30 @@ const Hero = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   const goToSlide = (index) => setCurrentSlide(index);
 
+  const handleTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > 50) nextSlide();
+    if (distance < -50) prevSlide();
+  };
+
   return (
-    <header className="relative w-full h-screen flex items-center justify-center text-center overflow-hidden group" style={{ position: 'relative' }}>
+    <header 
+      className="relative w-full h-screen flex items-center justify-center text-center overflow-hidden group" 
+      style={{ position: 'relative' }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {slides.map((slide, index) => (
         <div 
           key={index}
@@ -57,23 +81,11 @@ const Hero = () => {
       ))}
       
       <div className="relative flex flex-col items-center justify-center h-full text-center px-4" style={{ width: '100%', zIndex: 10, maxWidth: '800px' }}>
-        <div style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.75)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          padding: '4rem 3rem',
-          borderRadius: '32px',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          maxWidth: '680px',
-          border: '1px solid rgba(255, 255, 255, 0.4)'
-        }}>
-          <h1 style={{ color: '#d75971', fontSize: '4.5rem', fontWeight: '600', fontFamily: 'var(--font-serif)', marginBottom: '1rem', lineHeight: '1.1' }}>
+        <div className="hero-glass-box">
+          <h1 className="hero-title">
             Blooming with<br />Joyful Colors.
           </h1>
-          <p style={{ color: '#333', fontSize: '1.15rem', marginBottom: '2rem', maxWidth: '500px', fontWeight: '500', lineHeight: '1.6' }}>
+          <p className="hero-subtitle">
             Discover whimsical, handcrafted pottery that brings the bright magic of a summer garden right into your home.
           </p>
           <Link to="/ceramics" className="btn" style={{ 
@@ -100,14 +112,14 @@ const Hero = () => {
       {/* Side Arrows */}
       <button 
         onClick={prevSlide}
-        className="absolute left-8 z-20 flex items-center justify-center transition-opacity duration-300"
+        className="absolute left-8 z-20 flex items-center justify-center transition-opacity duration-300 desktop-only"
         style={{ top: '50%', left: '2rem', transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(4px)', borderRadius: '50%', padding: '0.5rem', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer', zIndex: 20, position: 'absolute' }}
       >
         <ChevronLeft size={32} strokeWidth={1} />
       </button>
       <button 
         onClick={nextSlide}
-        className="absolute right-8 z-20 flex items-center justify-center transition-opacity duration-300"
+        className="absolute right-8 z-20 flex items-center justify-center transition-opacity duration-300 desktop-only"
         style={{ top: '50%', right: '2rem', transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(4px)', borderRadius: '50%', padding: '0.5rem', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer', zIndex: 20, position: 'absolute' }}
       >
         <ChevronRight size={32} strokeWidth={1} />

@@ -223,4 +223,49 @@ button {
   .container {
     padding: 0 var(--spacing-md);
   }
+  .hero-glass-box {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    width: 90%;
+  }
+  .hero-title {
+    font-size: 3.2rem;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Hero Specific Styles */
+.hero-glass-box {
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 4rem 3rem;
+  border-radius: 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 680px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.hero-title {
+  color: #d75971;
+  font-size: 4.5rem;
+  font-weight: 600;
+  font-family: var(--font-serif);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  color: #333;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  font-weight: 500;
+  line-height: 1.6;
 }
