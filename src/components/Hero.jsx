@@ -77,6 +77,8 @@ const Hero = () => {
             className="w-full h-full"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
           />
+          {/* Subtle dark overlay for perfect text contrast */}
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.35)' }}></div>
         </div>
       ))}
       
