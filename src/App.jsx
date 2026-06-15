@@ -9,6 +9,8 @@ import PlaceholderPage from './pages/PlaceholderPage';
 import Checkout from './pages/Checkout';
 import AdminOrders from './pages/AdminOrders';
 import AboutUs from './pages/AboutUs';
+import Contact from './pages/Contact';
+import TermsAndConditions from './pages/TermsAndConditions';
 import Products from './pages/Products';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -34,6 +36,8 @@ function App() {
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/admin/orders" element={<AdminOrders />} />
                   <Route path="/about-us" element={<AboutUs />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="*" element={<PlaceholderPage />} />
                 </Routes>

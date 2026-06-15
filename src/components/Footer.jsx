@@ -48,9 +48,7 @@ const Footer = () => {
         <div className="flex flex-col gap-sm">
           <h3 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#111', marginBottom: '0.5rem' }}>Support</h3>
           <div className="flex flex-col gap-sm" style={{ color: '#555' }}>
-            <Link to="/privacy-policy">Privacy Policy</Link>
-            <Link to="/refund-policy">Refund Policy</Link>
-            <Link to="/shipping-policy">Shipping Policy</Link>
+            <Link to="/terms-and-conditions">Terms &amp; Conditions</Link>
           </div>
         </div>
 
