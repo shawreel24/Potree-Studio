@@ -23,7 +23,8 @@ export const AuthProvider = ({ children }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const isAdmin = user?.email === 'pottreestudio@gmail.com';
+  const adminEmails = ['pottreestudio@gmail.com', 'valapclawmkima81@gmail.com'];
+  const isAdmin = adminEmails.includes(user?.email);
 
   const value = {
     signUp: (data) => supabase.auth.signUp(data),
