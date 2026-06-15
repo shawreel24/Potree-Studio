@@ -15,7 +15,6 @@ const Footer = () => {
           
           <ul style={{ listStyleType: 'disc', paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', color: '#555' }}>
             <li>[Your Address Will Go Here]</li>
-            <li><a href="mailto:care@pottreestudio.com" style={{ textDecoration: 'underline' }}>care@pottreestudio.com</a></li>
             <li><a href="mailto:pottreestudio@gmail.com" style={{ textDecoration: 'underline' }}>pottreestudio@gmail.com</a></li>
             <li><a href="tel:+918414096532" style={{ textDecoration: 'none' }}>+91 84140 96532</a></li>
           </ul>
