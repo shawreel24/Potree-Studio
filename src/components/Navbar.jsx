@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, User, ShoppingBag, Menu, X } from 'lucide-react';
+import { Search, User, Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -23,9 +23,6 @@ const Navbar = () => {
           <div className="nav-links flex items-center gap-lg">
             <Link to="/" style={{ fontSize: '0.9rem', fontWeight: '500', letterSpacing: '0.02em' }}>Home</Link>
             <Link to="/about-us" style={{ fontSize: '0.9rem', fontWeight: '500', letterSpacing: '0.02em' }}>About Us</Link>
-            {isAdmin && (
-              <Link to="/admin/orders" style={{ fontSize: '0.9rem', fontWeight: '500', letterSpacing: '0.02em', color: '#c2410c' }}>Orders</Link>
-            )}
           </div>
 
           {/* Center Logo */}
@@ -43,9 +40,6 @@ const Navbar = () => {
             </button>
             <Link to="/login" aria-label="User Login" className="desktop-only">
               <User size={20} strokeWidth={1.5} />
-            </Link>
-            <Link to="/cart" aria-label="Shopping Cart">
-              <ShoppingBag size={20} strokeWidth={1.5} />
             </Link>
             <div className="desktop-only items-center gap-sm ml-2" style={{ fontSize: '0.9rem', fontWeight: '500' }}>
               <span>🇮🇳 INR</span>
@@ -78,9 +72,6 @@ const Navbar = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', fontSize: '1.75rem', fontWeight: '400', fontFamily: 'var(--font-serif)' }}>
             <Link to="/" onClick={closeMenu}>Home</Link>
             <Link to="/about-us" onClick={closeMenu}>About Us</Link>
-            {isAdmin && (
-              <Link to="/admin/orders" onClick={closeMenu} style={{ color: '#c2410c' }}>Orders (Admin)</Link>
-            )}
           </div>
 
           <div style={{ marginTop: 'auto', borderTop: '1px solid #eee', paddingTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '1.1rem', color: '#555' }}>

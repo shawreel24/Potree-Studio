@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
 import { assetUrl } from '../lib/assetUrl';
 
 const ProductCard = ({ product }) => {
-  const { addToCart } = useCart();
   // Treat undefined/null quantity as in-stock (Supabase not set up yet)
   const isOutOfStock = product.quantity != null && product.quantity === 0;
   return (
@@ -21,15 +19,13 @@ const ProductCard = ({ product }) => {
         <Link to={`/product/${product.id}`}>
           <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>{product.title}</h3>
         </Link>
-        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginBottom: '0.5rem' }}>{product.price}</p>
-        <button 
+        <Link 
+          to={`/product/${product.id}`}
           className="btn btn-outline" 
-          style={{ width: '100%', padding: '0.5rem', opacity: isOutOfStock ? 0.5 : 1 }}
-          onClick={() => addToCart(product)}
-          disabled={isOutOfStock}
+          style={{ width: '100%', padding: '0.5rem', opacity: isOutOfStock ? 0.6 : 1, textDecoration: 'none', display: 'block' }}
         >
-          {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
-        </button>
+          {isOutOfStock ? 'Out of Stock' : 'View Details'}
+        </Link>
       </div>
     </div>
   );

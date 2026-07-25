@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext';
 import { Search } from 'lucide-react';
 import AdminProductForm from '../components/AdminProductForm';
 import { assetUrl } from '../lib/assetUrl';
@@ -12,10 +11,8 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const { products, updateProduct, deleteProduct } = useProducts();
   const product = products.find(p => p.id === id);
-  const { addToCart } = useCart();
   const { isAdmin } = useAuth();
   
-  const [quantity, setQuantity] = useState(1);
   const [showEditForm, setShowEditForm] = useState(false);
 
   if (!product) {
@@ -26,14 +23,6 @@ const ProductDetails = () => {
       </div>
     );
   }
-
-  const handleAddToCart = () => {
-    // Add multiple items depending on quantity
-    const amountToAdd = Math.min(quantity, product.quantity || 0);
-    for (let i = 0; i < amountToAdd; i++) {
-      addToCart(product);
-    }
-  };
 
   const handleEditSubmit = (updatedProduct) => {
     updateProduct(updatedProduct);
@@ -92,7 +81,7 @@ const ProductDetails = () => {
           </div>
           
           <div style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)' }}>
-            Tax included. <Link to="/shipping-policy" style={{ textDecoration: 'underline' }}>Shipping</Link> calculated at checkout.
+            Hand-crafted in studio. Direct inquiries welcome.
           </div>
 
           {product.description && (
@@ -102,48 +91,17 @@ const ProductDetails = () => {
           )}
 
           <div style={{ fontSize: '0.9rem', color: product.quantity > 0 ? '#10b981' : '#ef4444', fontWeight: '500' }}>
-            {product.quantity > 0 ? `In Stock: ${product.quantity}` : 'Out of Stock'}
+            {product.quantity > 0 ? `Status: Available (${product.quantity} unit${product.quantity > 1 ? 's' : ''})` : 'Status: Currently Out of Stock'}
           </div>
 
-          <div style={{ marginTop: '1rem' }}>
-            <label style={{ display: 'block', fontSize: '0.875rem', color: '#555', marginBottom: '0.5rem' }}>Quantity</label>
-            <div style={{ display: 'inline-flex', border: '1px solid var(--color-border)', borderRadius: '2px', overflow: 'hidden' }}>
-              <button 
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                style={{ padding: '0.75rem 1rem', color: '#555', backgroundColor: '#fff', fontSize: '1.2rem', lineHeight: '1' }}
-                disabled={product.quantity === 0}
-              >-</button>
-              <input 
-                type="text" 
-                value={product.quantity === 0 ? 0 : quantity} 
-                readOnly
-                style={{ width: '50px', textAlign: 'center', border: 'none', borderLeft: '1px solid var(--color-border)', borderRight: '1px solid var(--color-border)', outline: 'none' }}
-              />
-              <button 
-                onClick={() => setQuantity(Math.min(product.quantity || 1, quantity + 1))}
-                style={{ padding: '0.75rem 1rem', color: '#555', backgroundColor: '#fff', fontSize: '1.2rem', lineHeight: '1' }}
-                disabled={product.quantity === 0 || quantity >= product.quantity}
-              >+</button>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-sm" style={{ marginTop: '1rem' }}>
-            <button 
-              className="btn btn-outline w-full" 
-              style={{ padding: '1rem', fontWeight: '500', opacity: product.quantity === 0 ? 0.5 : 1 }}
-              onClick={handleAddToCart}
-              disabled={product.quantity === 0}
+          <div className="flex flex-col gap-sm" style={{ marginTop: '1.5rem' }}>
+            <Link 
+              to="/contact" 
+              className="btn btn-primary w-full text-center" 
+              style={{ padding: '1rem', fontWeight: '500', backgroundColor: '#111', color: '#fff', textDecoration: 'none', display: 'block', borderRadius: '2px' }}
             >
-              Add to cart
-            </button>
-            <button 
-              className="btn btn-primary w-full" 
-              style={{ padding: '1rem', fontWeight: '500', backgroundColor: '#111', opacity: product.quantity === 0 ? 0.5 : 1 }}
-              onClick={() => { handleAddToCart(); window.location.href='/cart'; }}
-              disabled={product.quantity === 0}
-            >
-              Buy it now
-            </button>
+              Interested in this piece? Contact Us
+            </Link>
           </div>
 
           {(product.materials && product.materials.length > 0) && (

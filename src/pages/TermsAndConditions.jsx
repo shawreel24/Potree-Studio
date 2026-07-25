@@ -61,13 +61,21 @@ const TermsAndConditions = () => {
           <div style={sectionStyle}>
             <h2 style={topicTitleStyle}>Shipping &amp; Returns</h2>
             <p style={{ ...paraStyle, color: '#777', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-              Please read the following carefully before placing an order with Pot Tree Studio.
+              Please read the following carefully before inquiring about or purchasing ceramics from Pot Tree Studio.
             </p>
           </div>
 
           <hr style={dividerStyle} />
 
           {/* Subtopic 1 */}
+          <div style={sectionStyle}>
+            <p style={subtopicTitleStyle}>Catalog &amp; Direct Studio Acquisitions</p>
+            <p style={paraStyle}>
+              Our website serves exclusively as a digital showroom and catalog showcasing our artisan ceramic creations. Automated online transactions, checkout, and shopping carts are disabled. To purchase available items, request a custom piece, or commission art, please reach out to us directly via our Contact page or studio channels.
+            </p>
+          </div>
+
+          {/* Subtopic 2 */}
           <div style={sectionStyle}>
             <p style={subtopicTitleStyle}>Handmade Variations</p>
             <p style={paraStyle}>
