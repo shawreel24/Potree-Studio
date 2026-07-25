@@ -43,6 +43,23 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Column 3: Developer */}
+        <div className="flex flex-col gap-sm">
+          <h3 style={{ fontSize: '1.1rem', fontWeight: '600', color: '#111', marginBottom: '0.5rem' }}>Developer</h3>
+          <div className="flex flex-col gap-sm" style={{ color: '#555' }}>
+            <span style={{ fontWeight: '500', color: '#222' }}>Isak Roluahpuia</span>
+            <a 
+              href="https://wa.me/918119947383" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              style={{ textDecoration: 'none', color: '#555', display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '0.15rem' }}
+              title="Chat with Isak on WhatsApp"
+            >
+              <span>📞 8119947383</span>
+              <span style={{ fontSize: '0.75rem', color: '#16a34a', fontWeight: '600', border: '1px solid #bbf7d0', backgroundColor: '#f0fdf4', padding: '0.1rem 0.45rem', borderRadius: '999px' }}>💬 WhatsApp</span>
+            </a>
+          </div>
+        </div>
 
         {/* Column 4: Support */}
         <div className="flex flex-col gap-sm">
