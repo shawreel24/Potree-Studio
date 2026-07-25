@@ -7,6 +7,7 @@ import ProductDetails from './pages/ProductDetails';
 import PlaceholderPage from './pages/PlaceholderPage';
 import AboutUs from './pages/AboutUs';
 import Contact from './pages/Contact';
+import Developer from './pages/Developer';
 import TermsAndConditions from './pages/TermsAndConditions';
 import Products from './pages/Products';
 import Footer from './components/Footer';
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/developer" element={<Developer />} />
                 <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<PlaceholderPage />} />
