@@ -53,6 +53,16 @@ const Footer = () => {
         </div>
 
       </div>
+
+      {/* Bottom Copyright Section */}
+      <div className="container" style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid #e5e5e5', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', color: '#666', fontSize: '0.85rem' }}>
+        <div>
+          &copy; {new Date().getFullYear()} Pot Tree Studio. All rights reserved.
+        </div>
+        <div style={{ display: 'flex', gap: '1rem', color: '#777', fontStyle: 'italic' }}>
+          <span>Pure Craftsmanship &bull; Hand-thrown Ceramics</span>
+        </div>
+      </div>
     </footer>
   );
 };

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import { assetUrl } from '../lib/assetUrl';
 
 const AdminProductForm = ({ product, onSubmit, onCancel }) => {
   const isEditing = !!product;
@@ -10,6 +12,9 @@ const AdminProductForm = ({ product, onSubmit, onCancel }) => {
     tags: '',
     quantity: 0,
   });
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     if (product) {
@@ -27,6 +32,42 @@ const AdminProductForm = ({ product, onSubmit, onCancel }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      setIsUploading(true);
+      setUploadError(null);
+
+      // Create a unique file name to prevent overwrites and handle special characters
+      const fileExt = file.name.split('.').pop() || 'jpg';
+      const cleanFileName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+      const filePath = `product-images/${Date.now()}_${cleanFileName}`;
+
+      // Upload to Supabase storage bucket named 'products'
+      const { data, error } = await supabase.storage
+        .from('products')
+        .upload(filePath, file, { cacheControl: '3600', upsert: false });
+
+      if (error) {
+        throw error;
+      }
+
+      // Retrieve the public URL of the uploaded picture
+      const { data: { publicUrl } } = supabase.storage
+        .from('products')
+        .getPublicUrl(filePath);
+
+      setFormData((prev) => ({ ...prev, image: publicUrl }));
+    } catch (err) {
+      console.error('Error uploading picture to Supabase:', err);
+      setUploadError(`Upload failed: ${err.message || 'Ensure a public storage bucket named "products" exists in Supabase.'}`);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -99,14 +140,80 @@ const AdminProductForm = ({ product, onSubmit, onCancel }) => {
             />
           </div>
           <div>
-            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Image URL</label>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Product Picture</label>
+            
+            {/* Interactive Image Upload Box */}
+            <div 
+              style={{
+                border: isHovering ? '2px dashed #111' : '2px dashed #ccc',
+                borderRadius: '8px',
+                padding: '1.25rem',
+                textAlign: 'center',
+                backgroundColor: isHovering ? '#f3f2ee' : '#faf9f7',
+                marginBottom: '0.6rem',
+                position: 'relative',
+                cursor: isUploading ? 'wait' : 'pointer',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+              onClick={() => !isUploading && document.getElementById('imageUploadInput')?.click()}
+            >
+              <input 
+                id="imageUploadInput"
+                type="file" 
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={isUploading}
+                style={{ display: 'none' }}
+              />
+              
+              {isUploading ? (
+                <div style={{ padding: '1rem 0', color: '#a0785a', fontWeight: '500', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                  <span>⏳</span> Uploading picture to Supabase Storage...
+                </div>
+              ) : formData.image ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                  <img 
+                    src={formData.image?.startsWith('/assets/') ? assetUrl(formData.image) : formData.image} 
+                    alt="Product Preview" 
+                    style={{ maxHeight: '150px', maxWidth: '100%', borderRadius: '6px', objectFit: 'contain', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} 
+                  />
+                  <span style={{ fontSize: '0.85rem', color: '#111', fontWeight: '500', textDecoration: 'underline' }}>
+                    Click here to replace picture
+                  </span>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.35rem', padding: '0.5rem 0' }}>
+                  <span style={{ fontSize: '1.8rem' }}>📤</span>
+                  <span style={{ fontWeight: '600', color: '#111', fontSize: '0.95rem' }}>
+                    Click to upload picture
+                  </span>
+                  <span style={{ fontSize: '0.8rem', color: '#666' }}>
+                    Saved directly to Supabase Storage (JPG, PNG, WEBP)
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {uploadError && (
+              <div style={{ color: '#b91c1c', fontSize: '0.85rem', marginBottom: '0.6rem', padding: '0.6rem', backgroundColor: '#fef2f2', border: '1px solid #fecaca', borderRadius: '6px', lineHeight: 1.4 }}>
+                ⚠️ {uploadError}
+                <div style={{ fontSize: '0.75rem', color: '#7f1d1d', marginTop: '0.25rem' }}>
+                  Tip: In your Supabase dashboard, go to Storage &rarr; Create a new public bucket named <b>products</b> and enable INSERT/SELECT permissions for users.
+                </div>
+              </div>
+            )}
+
+            <label style={{ display: 'block', fontSize: '0.8rem', color: '#666', marginBottom: '0.25rem' }}>Or enter picture URL directly:</label>
             <input 
               type="text" 
               name="image" 
               value={formData.image} 
               onChange={handleChange} 
               required
-              style={{ width: '100%', padding: '0.75rem', border: '1px solid #ccc', borderRadius: '4px' }}
+              placeholder="https://... or /assets/..."
+              style={{ width: '100%', padding: '0.65rem', border: '1px solid #ccc', borderRadius: '4px', fontSize: '0.9rem' }}
             />
           </div>
           <div>
@@ -155,10 +262,11 @@ const AdminProductForm = ({ product, onSubmit, onCancel }) => {
             </button>
             <button 
               type="submit" 
+              disabled={isUploading}
               className="btn btn-primary"
-              style={{ flex: 1, padding: '0.75rem', backgroundColor: '#111', color: 'white', border: 'none', borderRadius: '4px' }}
+              style={{ flex: 1, padding: '0.75rem', backgroundColor: isUploading ? '#777' : '#111', color: 'white', border: 'none', borderRadius: '4px', cursor: isUploading ? 'not-allowed' : 'pointer' }}
             >
-              {isEditing ? 'Save Changes' : 'Add Product'}
+              {isUploading ? 'Uploading...' : isEditing ? 'Save Changes' : 'Add Product'}
             </button>
           </div>
         </form>
