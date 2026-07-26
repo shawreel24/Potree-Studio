@@ -5,19 +5,14 @@ import { assetUrl } from '../lib/assetUrl';
 
 const slides = [
   {
-    image: assetUrl('assets/images/hero_image.webp'),
-    title: 'Signature Ceramics',
-    link: '/ceramics'
+    type: 'video',
+    src: assetUrl('assets/images/hero_pottery_video.mp4'),
+    title: 'Pottery Workshop Video'
   },
   {
-    image: assetUrl('assets/images/hero_floral.webp'),
-    title: 'Summer Floral Collection',
-    link: '/ceramics'
-  },
-  {
-    image: assetUrl('assets/images/about_pottery_hands.webp'),
-    title: 'Pottery Classes',
-    link: '/classes'
+    type: 'image',
+    src: assetUrl('assets/images/hero_pottery_image.jpg'),
+    title: 'Handcrafted Pottery Piece'
   }
 ];
 
@@ -27,9 +22,10 @@ const Hero = () => {
   const [touchEnd, setTouchEnd] = useState(null);
 
   useEffect(() => {
+    // Switch slides every 10 seconds to allow video playback
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 10000);
     return () => clearInterval(timer);
   }, []);
 
@@ -56,7 +52,7 @@ const Hero = () => {
   return (
     <header 
       className="relative w-full h-screen flex items-center justify-center text-center overflow-hidden group" 
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', height: '100vh', width: '100%', backgroundColor: '#2d2925' }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -66,86 +62,123 @@ const Hero = () => {
           key={index}
           className="absolute inset-0 w-full h-full transition-opacity duration-1000"
           style={{ 
+            position: 'absolute',
+            inset: 0,
             opacity: currentSlide === index ? 1 : 0,
             zIndex: currentSlide === index ? 1 : 0,
-            transition: 'opacity 1s ease-in-out',
-            backgroundColor: '#eae3db'
+            transition: 'opacity 1.2s ease-in-out',
+            backgroundColor: '#2d2925',
+            pointerEvents: currentSlide === index ? 'auto' : 'none'
           }}
         >
-          <img 
-            src={slide.image} 
-            alt={slide.title} 
-            className="w-full h-full"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
-            fetchpriority={index === 0 ? "high" : "auto"}
-            loading={index === 0 ? "eager" : "lazy"}
-          />
-          {/* Subtle dark overlay for perfect text contrast */}
-          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.35)' }}></div>
+          {slide.type === 'video' ? (
+            <video 
+              src={slide.src}
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="w-full h-full"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            />
+          ) : (
+            <img 
+              src={slide.src} 
+              alt={slide.title} 
+              className="w-full h-full"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+              loading="lazy"
+            />
+          )}
+          
+          {/* Warm, earthy dark overlay matching the reference image's color palette and mood */}
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(55, 47, 39, 0.42)', mixBlendMode: 'multiply' }}></div>
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.25)' }}></div>
         </div>
       ))}
       
-      <div className="relative flex flex-col items-center justify-center h-full text-center px-4" style={{ width: '100%', zIndex: 10, maxWidth: '800px' }}>
-        <div className="hero-glass-box">
-          <h1 className="hero-title">
-            Blooming with<br />Joyful Colors.
-          </h1>
-          <p className="hero-subtitle">
-            Discover whimsical, handcrafted pottery that brings the bright magic of a summer garden right into your home.
-          </p>
-          <Link to="/ceramics" className="btn" style={{ 
-            backgroundColor: '#d75971', 
-            color: '#fff', 
-            padding: '0.85rem 2.5rem', 
-            borderRadius: '50px', 
-            fontSize: '1.05rem', 
-            fontWeight: '600', 
-            letterSpacing: 'normal', 
-            textTransform: 'none', 
-            border: 'none',
-            boxShadow: '0 8px 20px rgba(215, 89, 113, 0.3)',
-            transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+      {/* Centered Text Overlay matching exact font and arrangement of reference image */}
+      <div className="relative flex flex-col items-center justify-center h-full text-center px-4" style={{ width: '100%', zIndex: 10, maxWidth: '900px' }}>
+        <h1 style={{
+          fontFamily: "'Cinzel', 'Cormorant Garamond', 'Playfair Display', serif",
+          fontSize: 'clamp(2.5rem, 6vw, 4.4rem)',
+          fontWeight: '500',
+          color: '#ffffff',
+          letterSpacing: '0.08em',
+          lineHeight: '1.25',
+          textTransform: 'uppercase',
+          marginBottom: '2rem',
+          textShadow: '0 4px 20px rgba(0,0,0,0.4)'
+        }}>
+          Crafting<br />Stories By Hand
+        </h1>
+        <Link 
+          to="/ceramics" 
+          style={{
+            backgroundColor: '#f6f4ee',
+            color: '#3d3934',
+            fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+            fontSize: '0.95rem',
+            fontWeight: '600',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            padding: '0.8rem 3rem',
+            borderRadius: '999px',
+            textDecoration: 'none',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
+            transition: 'transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(215, 89, 113, 0.4)'; }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 20px rgba(215, 89, 113, 0.3)'; }}
-          >
-            Explore the Garden
-          </Link>
-        </div>
+          onMouseEnter={e => { 
+            e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'; 
+            e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 0, 0, 0.35)';
+            e.currentTarget.style.backgroundColor = '#ffffff';
+          }}
+          onMouseLeave={e => { 
+            e.currentTarget.style.transform = 'translateY(0) scale(1)'; 
+            e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
+            e.currentTarget.style.backgroundColor = '#f6f4ee';
+          }}
+        >
+          Shop Now
+        </Link>
       </div>
 
       {/* Side Arrows */}
       <button 
         onClick={prevSlide}
         className="absolute left-8 z-20 flex items-center justify-center transition-opacity duration-300 desktop-only"
-        style={{ top: '50%', left: '2rem', transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(4px)', borderRadius: '50%', padding: '0.5rem', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer', zIndex: 20, position: 'absolute' }}
+        style={{ top: '50%', left: '2rem', transform: 'translateY(-50%)', backgroundColor: 'rgba(246, 244, 238, 0.15)', backdropFilter: 'blur(6px)', borderRadius: '50%', padding: '0.6rem', color: '#fff', border: '1px solid rgba(246, 244, 238, 0.3)', cursor: 'pointer', zIndex: 20, position: 'absolute' }}
+        aria-label="Previous Slide"
       >
-        <ChevronLeft size={32} strokeWidth={1} />
+        <ChevronLeft size={30} strokeWidth={1.2} />
       </button>
       <button 
         onClick={nextSlide}
         className="absolute right-8 z-20 flex items-center justify-center transition-opacity duration-300 desktop-only"
-        style={{ top: '50%', right: '2rem', transform: 'translateY(-50%)', backgroundColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(4px)', borderRadius: '50%', padding: '0.5rem', color: '#fff', border: '1px solid rgba(255,255,255,0.3)', cursor: 'pointer', zIndex: 20, position: 'absolute' }}
+        style={{ top: '50%', right: '2rem', transform: 'translateY(-50%)', backgroundColor: 'rgba(246, 244, 238, 0.15)', backdropFilter: 'blur(6px)', borderRadius: '50%', padding: '0.6rem', color: '#fff', border: '1px solid rgba(246, 244, 238, 0.3)', cursor: 'pointer', zIndex: 20, position: 'absolute' }}
+        aria-label="Next Slide"
       >
-        <ChevronRight size={32} strokeWidth={1} />
+        <ChevronRight size={30} strokeWidth={1.2} />
       </button>
 
       {/* Bottom Dots */}
-      <div className="absolute bottom-8 left-0 w-full flex items-center justify-center gap-sm z-20" style={{ position: 'absolute', bottom: '2rem', width: '100%', zIndex: 20 }}>
+      <div className="absolute bottom-8 left-0 w-full flex items-center justify-center z-20" style={{ position: 'absolute', bottom: '2.5rem', width: '100%', zIndex: 20, gap: '0.75rem' }}>
         {slides.map((_, index) => (
           <button 
             key={index}
             onClick={() => goToSlide(index)}
             style={{ 
-              width: '8px', 
-              height: '8px', 
-              borderRadius: '50%', 
-              backgroundColor: currentSlide === index ? '#fff' : 'rgba(255,255,255,0.4)',
-              transition: 'all 0.3s ease',
+              width: currentSlide === index ? '32px' : '10px', 
+              height: '10px', 
+              borderRadius: currentSlide === index ? '6px' : '50%', 
+              backgroundColor: currentSlide === index ? '#f6f4ee' : 'rgba(246, 244, 238, 0.4)',
+              transition: 'all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1)',
               padding: 0,
               border: 'none',
-              cursor: 'pointer',
-              margin: '0 4px'
+              cursor: 'pointer'
             }}
             aria-label={`Go to slide ${index + 1}`}
           />
