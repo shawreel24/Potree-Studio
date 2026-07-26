@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
-import Story from '../components/Story';
-import Reviews from '../components/Reviews';
 import { useProducts } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
 import AdminProductForm from '../components/AdminProductForm';
@@ -24,9 +22,8 @@ const Home = () => {
       
       <section className="py-24" style={{ padding: '6rem 0' }}>
         <div className="container">
-          <div className="text-center mb-12" style={{ marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Our Floral Collection</h2>
-            <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto' }}>Playful pieces crafted to brighten your everyday moments. Hand-thrown and painted with love.</p>
+          <div className="text-center mb-12" style={{ marginBottom: '3rem', textAlign: 'center' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', fontFamily: 'var(--font-serif)', letterSpacing: '0.05em' }}>New Collection</h2>
           </div>
           
           {isAdmin && (
@@ -60,9 +57,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
-      <Story />
-      <Reviews />
 
       {showAddForm && (
         <AdminProductForm 
