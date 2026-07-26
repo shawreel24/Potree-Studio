@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
     <div className="product-card flex flex-col gap-sm">
       <Link to={`/product/${product.id}`} className="image-wrapper" style={{ display: 'block', backgroundColor: '#f5f5f5', aspectRatio: '3/4' }}>
         <img 
-          src={product.image?.startsWith('/assets/') ? assetUrl(product.image) : product.image}
+          src={assetUrl(product.image)}
           alt={product.title} 
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           loading="lazy"

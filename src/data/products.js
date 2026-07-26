@@ -1,5 +1,4 @@
-const base = import.meta.env.BASE_URL || '/';
-const img = (name) => `${base}assets/images/${name}`;
+const img = (name) => `assets/images/${name}`;
 
 export const products = [
   { 

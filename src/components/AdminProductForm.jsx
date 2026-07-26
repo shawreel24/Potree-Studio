@@ -175,7 +175,7 @@ const AdminProductForm = ({ product, onSubmit, onCancel }) => {
               ) : formData.image ? (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
                   <img 
-                    src={formData.image?.startsWith('/assets/') ? assetUrl(formData.image) : formData.image} 
+                    src={assetUrl(formData.image)} 
                     alt="Product Preview" 
                     style={{ maxHeight: '150px', maxWidth: '100%', borderRadius: '6px', objectFit: 'contain', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} 
                   />
