@@ -18,32 +18,11 @@ export const ProductProvider = ({ children }) => {
 
     if (error) {
       console.error("Error fetching products from Supabase:", error);
+      // Only fallback to hardcoded products if Supabase connection fails
       setProducts(fallbackProducts);
-    } else if (data && data.length > 0) {
-      setProducts(data);
-    } else if (data && data.length === 0) {
-      // If table is empty, auto-populate it with fallback products
-      console.log("Auto-populating Supabase products table...");
-      const productsToInsert = fallbackProducts.map(({ id, ...rest }) => ({
-        ...rest,
-        quantity: 10, // Give them an initial stock of 10
-      }));
-      
-      const { error: insertError } = await supabase
-        .from('products')
-        .insert(productsToInsert);
-        
-      if (!insertError) {
-        // Fetch again to get the new UUIDs
-        const { data: newData } = await supabase
-          .from('products')
-          .select('*')
-          .order('created_at', { ascending: false });
-        if (newData) setProducts(newData);
-      } else {
-        console.error("Error populating products:", insertError);
-        setProducts(fallbackProducts);
-      }
+    } else {
+      // Respect whatever Supabase returns, even if the user has deleted all products (empty array [])
+      setProducts(data || []);
     }
     setLoading(false);
   };
@@ -60,9 +39,14 @@ export const ProductProvider = ({ children }) => {
 
     if (error) {
       console.error("Error adding product:", error);
-      alert("Failed to add product.");
-    } else if (data) {
+      alert("Failed to add product: " + error.message);
+      return false;
+    } else if (data && data.length > 0) {
       setProducts((prev) => [data[0], ...prev]);
+      return true;
+    } else {
+      alert("Failed to add product. Please check Supabase Row Level Security (RLS) INSERT policies.");
+      return false;
     }
   };
 
@@ -77,25 +61,39 @@ export const ProductProvider = ({ children }) => {
 
     if (error) {
       console.error("Error updating product:", error);
-      alert("Failed to update product.");
-    } else if (data) {
+      alert("Failed to update product: " + error.message);
+      return false;
+    } else if (data && data.length > 0) {
       setProducts((prevProducts) =>
         prevProducts.map((p) => (p.id === id ? data[0] : p))
       );
+      return true;
+    } else {
+      alert("Product update failed in Supabase. Please check your Table Row Level Security (RLS) UPDATE policies.");
+      return false;
     }
   };
 
   const deleteProduct = async (id) => {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('products')
       .delete()
-      .eq('id', id);
+      .eq('id', id)
+      .select();
 
     if (error) {
       console.error("Error deleting product:", error);
-      alert("Failed to delete product.");
+      alert("Failed to delete product: " + error.message);
+      return false;
+    } else if (data && data.length === 0) {
+      console.error("No rows were deleted from Supabase. Likely blocked by Row Level Security (RLS) policies.");
+      alert("Delete failed! Supabase rejected the deletion. Please enable DELETE permission in your Supabase Row Level Security (RLS) policies for the 'products' table.");
+      // Re-fetch products to restore synchronization with database
+      fetchProducts();
+      return false;
     } else {
       setProducts((prevProducts) => prevProducts.filter((p) => p.id !== id));
+      return true;
     }
   };
 

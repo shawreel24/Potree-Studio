@@ -24,15 +24,19 @@ const ProductDetails = () => {
     );
   }
 
-  const handleEditSubmit = (updatedProduct) => {
-    updateProduct(updatedProduct);
-    setShowEditForm(false);
+  const handleEditSubmit = async (updatedProduct) => {
+    const success = await updateProduct(updatedProduct);
+    if (success) {
+      setShowEditForm(false);
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      deleteProduct(product.id);
-      navigate('/');
+      const success = await deleteProduct(product.id);
+      if (success) {
+        navigate('/');
+      }
     }
   };
 
