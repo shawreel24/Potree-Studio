@@ -9,7 +9,7 @@ const Footer = () => {
         {/* Column 1: Brand & Contact & Map */}
         <div className="flex flex-col gap-md">
           <div className="flex flex-col">
-            <span style={{ fontFamily: 'var(--font-handwritten)', fontSize: '2.2rem', fontWeight: '700', color: '#111' }}>Pot Tree Studio</span>
+            <span style={{ fontFamily: 'var(--font-handwritten)', fontSize: 'clamp(1.6rem, 5vw, 2.2rem)', fontWeight: '700', color: '#111', whiteSpace: 'nowrap' }}>Pot Tree Studio</span>
           </div>
           
           <ul style={{ listStyleType: 'disc', paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', color: '#555' }}>

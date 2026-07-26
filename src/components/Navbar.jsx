@@ -26,9 +26,9 @@ const Navbar = () => {
           </div>
 
           {/* Center Logo */}
-          <div className="absolute left-1/2 -translate-x-1/2" style={{ transform: 'translateX(-50%)', left: '50%' }}>
+          <div className="absolute left-1/2 -translate-x-1/2" style={{ transform: 'translateX(-50%)', left: '50%', maxWidth: '75%', textAlign: 'center' }}>
             <Link to="/" className="flex flex-col items-center" onClick={closeMenu}>
-              <span style={{ fontFamily: 'var(--font-handwritten)', fontSize: '2.2rem', fontWeight: '700', letterSpacing: '0.02em', paddingBottom: '0.2rem' }}>Pot Tree Studio</span>
+              <span style={{ fontFamily: 'var(--font-handwritten)', fontSize: 'clamp(1.5rem, 5vw, 2.2rem)', fontWeight: '700', letterSpacing: '0.02em', paddingBottom: '0.2rem', whiteSpace: 'nowrap' }}>Pot Tree Studio</span>
             </Link>
           </div>
 
