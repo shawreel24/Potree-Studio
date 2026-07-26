@@ -11,7 +11,7 @@ const slides = [
   },
   {
     type: 'image',
-    src: assetUrl('assets/images/hero_pottery_image.jpg'),
+    src: assetUrl('assets/images/hero_pottery_image.webp'),
     title: 'Handcrafted Pottery Piece'
   }
 ];
@@ -87,7 +87,9 @@ const Hero = () => {
               alt={slide.title} 
               className="w-full h-full"
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
           )}
           
@@ -98,16 +100,18 @@ const Hero = () => {
       ))}
       
       {/* Centered Text Overlay matching exact font and arrangement of reference image */}
-      <div className="relative flex flex-col items-center justify-center h-full text-center px-4" style={{ width: '100%', zIndex: 10, maxWidth: '900px' }}>
+      <div className="relative flex flex-col items-center justify-center h-full text-center px-4 mx-auto" style={{ width: '100%', zIndex: 10, maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
         <h1 style={{
           fontFamily: "'Cinzel', 'Cormorant Garamond', 'Playfair Display', serif",
-          fontSize: 'clamp(2.5rem, 6vw, 4.4rem)',
+          fontSize: 'clamp(1.65rem, 6.5vw, 4.4rem)',
           fontWeight: '500',
           color: '#ffffff',
-          letterSpacing: '0.08em',
+          letterSpacing: '0.06em',
           lineHeight: '1.25',
           textTransform: 'uppercase',
           marginBottom: '2rem',
+          textAlign: 'center',
+          width: '100%',
           textShadow: '0 4px 20px rgba(0,0,0,0.4)'
         }}>
           Crafting<br />Stories By Hand
