@@ -17,9 +17,10 @@ const Story = () => {
             boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
           }}>
             <img 
-              src={assetUrl('assets/images/about_sunny_workshop.png')} 
+              src={assetUrl('assets/images/about_sunny_workshop.webp')} 
               alt="Sunny pottery workshop" 
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              loading="lazy"
             />
           </div>
         </div>

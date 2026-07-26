@@ -73,9 +73,10 @@ const AboutUs = () => {
               boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
             }}>
               <img
-                src={assetUrl('assets/images/about_sunny_workshop.png')}
+                src={assetUrl('assets/images/about_sunny_workshop.webp')}
                 alt="The Pot Tree Studio workshop"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                loading="lazy"
               />
             </div>
           </div>
@@ -174,9 +175,10 @@ const AboutUs = () => {
               boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
             }}>
               <img
-                src={assetUrl('assets/images/about_pottery_hands.png')}
+                src={assetUrl('assets/images/about_pottery_hands.webp')}
                 alt="Pottery being shaped by hands on a wheel"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                loading="lazy"
               />
             </div>
           </div>

@@ -5,17 +5,17 @@ import { assetUrl } from '../lib/assetUrl';
 
 const slides = [
   {
-    image: assetUrl('assets/images/hero_image.png'),
+    image: assetUrl('assets/images/hero_image.webp'),
     title: 'Signature Ceramics',
     link: '/ceramics'
   },
   {
-    image: assetUrl('assets/images/hero_floral.png'),
+    image: assetUrl('assets/images/hero_floral.webp'),
     title: 'Summer Floral Collection',
     link: '/ceramics'
   },
   {
-    image: assetUrl('assets/images/about_pottery_hands.png'),
+    image: assetUrl('assets/images/about_pottery_hands.webp'),
     title: 'Pottery Classes',
     link: '/classes'
   }
@@ -68,7 +68,8 @@ const Hero = () => {
           style={{ 
             opacity: currentSlide === index ? 1 : 0,
             zIndex: currentSlide === index ? 1 : 0,
-            transition: 'opacity 1s ease-in-out'
+            transition: 'opacity 1s ease-in-out',
+            backgroundColor: '#eae3db'
           }}
         >
           <img 
@@ -76,6 +77,8 @@ const Hero = () => {
             alt={slide.title} 
             className="w-full h-full"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            fetchpriority={index === 0 ? "high" : "auto"}
+            loading={index === 0 ? "eager" : "lazy"}
           />
           {/* Subtle dark overlay for perfect text contrast */}
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0,0,0,0.35)' }}></div>
