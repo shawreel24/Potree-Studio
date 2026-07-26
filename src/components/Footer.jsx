@@ -9,12 +9,11 @@ const Footer = () => {
         {/* Column 1: Brand & Contact & Map */}
         <div className="flex flex-col gap-md">
           <div className="flex flex-col">
-            <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: '600', color: '#111' }}>Pot Tree Studio</span>
-            <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Pure Craftsmanship</span>
+            <span style={{ fontFamily: 'var(--font-handwritten)', fontSize: '2.2rem', fontWeight: '700', color: '#111' }}>Pot Tree Studio</span>
           </div>
           
           <ul style={{ listStyleType: 'disc', paddingLeft: '1.2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', color: '#555' }}>
-            <li>[Your Address Will Go Here]</li>
+            <li>F-36, Dr. Selbuanga Building, Ground Floor, Lower Chanmari</li>
             <li><a href="mailto:pottreestudio@gmail.com" style={{ textDecoration: 'underline' }}>pottreestudio@gmail.com</a></li>
             <li><a href="tel:+918414096532" style={{ textDecoration: 'none' }}>+91 84140 96532</a></li>
           </ul>
@@ -61,7 +60,7 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} Pot Tree Studio. All rights reserved.
         </div>
         <div style={{ display: 'flex', gap: '1rem', color: '#777', fontStyle: 'italic' }}>
-          <span>Pure Craftsmanship &bull; Hand-thrown Ceramics</span>
+          <span>Handcrafted Ceramics &bull; Aizawl, Mizoram</span>
         </div>
       </div>
     </footer>

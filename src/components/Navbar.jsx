@@ -28,8 +28,7 @@ const Navbar = () => {
           {/* Center Logo */}
           <div className="absolute left-1/2 -translate-x-1/2" style={{ transform: 'translateX(-50%)', left: '50%' }}>
             <Link to="/" className="flex flex-col items-center" onClick={closeMenu}>
-              <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: '600' }}>Pot Tree Studio</span>
-              <span style={{ fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', display: 'block', textAlign: 'center' }}>Pure Craftsmanship</span>
+              <span style={{ fontFamily: 'var(--font-handwritten)', fontSize: '2.2rem', fontWeight: '700', letterSpacing: '0.02em', paddingBottom: '0.2rem' }}>Pot Tree Studio</span>
             </Link>
           </div>
 

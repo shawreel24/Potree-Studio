@@ -76,6 +76,8 @@ const Contact = () => {
             <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>📍</div>
             <h3 style={{ fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#a0785a', margin: '0 0 0.5rem' }}>Location</h3>
             <p style={{ color: '#1a1a1a', fontSize: '0.95rem', fontWeight: '500', margin: 0 }}>
+              F-36, Dr. Selbuanga Building,<br />
+              Ground Floor, Lower Chanmari,<br />
               Aizawl, Mizoram, India
             </p>
           </div>
