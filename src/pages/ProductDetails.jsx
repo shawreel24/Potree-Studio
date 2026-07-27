@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
-import { Search } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import AdminProductForm from '../components/AdminProductForm';
 import { assetUrl } from '../lib/assetUrl';
 
@@ -14,6 +14,7 @@ const ProductDetails = () => {
   const { isAdmin } = useAuth();
   
   const [showEditForm, setShowEditForm] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   if (!product) {
     return (
@@ -24,10 +25,25 @@ const ProductDetails = () => {
     );
   }
 
+  const productImages = (product.images && product.images.length > 0)
+    ? product.images
+    : (product.image ? [product.image] : []);
+    
+  const activeIndex = currentImageIndex >= productImages.length ? 0 : currentImageIndex;
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % productImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
+  };
+
   const handleEditSubmit = async (updatedProduct) => {
     const success = await updateProduct(updatedProduct);
     if (success) {
       setShowEditForm(false);
+      setCurrentImageIndex(0);
     }
   };
 
@@ -64,16 +80,118 @@ const ProductDetails = () => {
 
       <div className="flex" style={{ flexWrap: 'wrap', gap: '4rem' }}>
         
-        {/* Left Side: Image */}
-        <div style={{ flex: '1 1 500px', position: 'relative' }}>
-          <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: '#fff', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', cursor: 'pointer' }}>
-            <Search size={16} />
+        {/* Left Side: Sliding Image Gallery */}
+        <div style={{ flex: '1 1 500px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          
+          {/* Main Display Box */}
+          <div style={{ position: 'relative', width: '100%', backgroundColor: '#f5f5f5', borderRadius: '8px', overflow: 'hidden', aspectRatio: '4/5', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+            
+            {/* Search icon badge */}
+            <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: '#fff', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', cursor: 'pointer', zIndex: 10 }}>
+              <Search size={18} color="#333" />
+            </div>
+
+            {/* Image Counter Badge */}
+            {productImages.length > 1 && (
+              <div style={{ position: 'absolute', top: '1rem', right: '1rem', backgroundColor: 'rgba(0,0,0,0.7)', color: '#fff', padding: '0.35rem 0.85rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '500', zIndex: 10, backdropFilter: 'blur(4px)' }}>
+                {activeIndex + 1} / {productImages.length}
+              </div>
+            )}
+
+            {/* Main Image */}
+            <img 
+              src={assetUrl(productImages[activeIndex])} 
+              alt={`${product.title} view ${activeIndex + 1}`} 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.3s ease' }}
+            />
+
+            {/* Left / Right Navigation Arrows */}
+            {productImages.length > 1 && (
+              <>
+                <button 
+                  onClick={prevImage}
+                  style={{
+                    position: 'absolute',
+                    left: '0.75rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    backgroundColor: '#fff',
+                    border: '1px solid rgba(0,0,0,0.08)',
+                    borderRadius: '50%',
+                    width: '44px',
+                    height: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    zIndex: 10,
+                    transition: 'all 0.2s ease',
+                  }}
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={24} color="#111" />
+                </button>
+                <button 
+                  onClick={nextImage}
+                  style={{
+                    position: 'absolute',
+                    right: '0.75rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    backgroundColor: '#fff',
+                    border: '1px solid rgba(0,0,0,0.08)',
+                    borderRadius: '50%',
+                    width: '44px',
+                    height: '44px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    zIndex: 10,
+                    transition: 'all 0.2s ease',
+                  }}
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={24} color="#111" />
+                </button>
+              </>
+            )}
           </div>
-          <img 
-            src={assetUrl(product.image)} 
-            alt={product.title} 
-            style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '2px', backgroundColor: '#f5f5f5' }}
-          />
+
+          {/* Thumbnail Navigation Bar */}
+          {productImages.length > 1 && (
+            <div style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.25rem' }}>
+              {productImages.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentImageIndex(idx)}
+                  style={{
+                    flex: '0 0 80px',
+                    height: '80px',
+                    borderRadius: '6px',
+                    overflow: 'hidden',
+                    border: idx === activeIndex ? '2px solid #111' : '2px solid transparent',
+                    opacity: idx === activeIndex ? 1 : 0.6,
+                    padding: 0,
+                    cursor: 'pointer',
+                    backgroundColor: '#f5f5f5',
+                    boxShadow: idx === activeIndex ? '0 2px 8px rgba(0,0,0,0.15)' : 'none',
+                    transition: 'all 0.2s ease',
+                  }}
+                  aria-label={`View thumbnail ${idx + 1}`}
+                >
+                  <img 
+                    src={assetUrl(img)} 
+                    alt={`Thumbnail ${idx + 1}`} 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
+
         </div>
 
         {/* Right Side: Details */}
@@ -149,3 +267,4 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+

@@ -6,6 +6,7 @@ export const products = [
     title: 'Pink Blossom Mug', 
     price: '₹1,299', 
     image: img('mug_pink_flower.webp'),
+    images: [img('mug_pink_flower.webp'), img('product_terracotta_mug.webp'), img('product_speckled_pitcher.webp')],
     description: 'A beautiful pink blossom mug to start your day with joy.',
     tags: ['floral', 'pink', 'mug', 'gift'],
     materials: ['High-fired ceramic', 'Stoneware', 'Hand Painted'],
@@ -16,6 +17,7 @@ export const products = [
     title: 'Fairy Door Cup', 
     price: '₹1,499', 
     image: img('cup_fairy_door.webp'),
+    images: [img('cup_fairy_door.webp'), img('product_sage_bowl.webp'), img('about_pottery_hands.webp')],
     description: 'A magical cup featuring a tiny fairy door design.',
     tags: ['magical', 'fairy', 'cup'],
     materials: ['High-fired ceramic', 'Stoneware', 'Wheel Thrown'],
@@ -26,6 +28,7 @@ export const products = [
     title: 'Sunny Cherry Cup', 
     price: '₹999', 
     image: img('cup_yellow_cherry.webp'),
+    images: [img('cup_yellow_cherry.webp'), img('product_alabaster_vase.webp'), img('hero_pottery_image.webp')],
     description: 'Brighten your morning with this sunny cherry cup.',
     tags: ['sunny', 'cherry', 'cup', 'yellow'],
     materials: ['Ceramic', 'Hand Painted'],
@@ -36,10 +39,12 @@ export const products = [
     title: 'Garden Sunflower Mug', 
     price: '₹1,399', 
     image: img('mug_sunflower.webp'),
+    images: [img('mug_sunflower.webp'), img('product_speckled_pitcher.webp'), img('product_terracotta_mug.webp')],
     description: 'A warm and inviting mug adorned with hand-painted sunflowers.',
     tags: ['sunflower', 'garden', 'mug', 'floral'],
     materials: ['Stoneware', 'Wheel Thrown', 'Glazed finish'],
     quantity: 10,
   },
 ];
+
 

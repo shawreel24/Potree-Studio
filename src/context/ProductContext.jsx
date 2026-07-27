@@ -39,7 +39,8 @@ export const ProductProvider = ({ children }) => {
 
     if (error) {
       console.error("Error adding product:", error);
-      alert("Failed to add product: " + error.message);
+      const isMissingColumn = error.message && (error.message.includes('images') || error.message.includes('column') || error.message.includes('schema'));
+      alert(`Failed to add product: ${error.message}${isMissingColumn ? '\n\nTip: To store multiple pictures in Supabase, add an "images" column (type: text[] or jsonb) to your "products" table in Supabase dashboard.' : ''}`);
       return false;
     } else if (data && data.length > 0) {
       setProducts((prev) => [data[0], ...prev]);
@@ -61,7 +62,8 @@ export const ProductProvider = ({ children }) => {
 
     if (error) {
       console.error("Error updating product:", error);
-      alert("Failed to update product: " + error.message);
+      const isMissingColumn = error.message && (error.message.includes('images') || error.message.includes('column') || error.message.includes('schema'));
+      alert(`Failed to update product: ${error.message}${isMissingColumn ? '\n\nTip: To store multiple pictures in Supabase, add an "images" column (type: text[] or jsonb) to your "products" table in Supabase dashboard.' : ''}`);
       return false;
     } else if (data && data.length > 0) {
       setProducts((prevProducts) =>
