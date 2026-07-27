@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react';
 import AdminProductForm from '../components/AdminProductForm';
 import { assetUrl } from '../lib/assetUrl';
 
@@ -15,6 +15,7 @@ const ProductDetails = () => {
   
   const [showEditForm, setShowEditForm] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   if (!product) {
     return (
@@ -38,6 +39,17 @@ const ProductDetails = () => {
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isLightboxOpen) return;
+      if (e.key === 'Escape') setIsLightboxOpen(false);
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, productImages.length]);
 
   const handleEditSubmit = async (updatedProduct) => {
     const success = await updateProduct(updatedProduct);
@@ -86,9 +98,13 @@ const ProductDetails = () => {
           {/* Main Display Box */}
           <div style={{ position: 'relative', width: '100%', backgroundColor: '#f5f5f5', borderRadius: '8px', overflow: 'hidden', aspectRatio: '4/5', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
             
-            {/* Search icon badge */}
-            <div style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: '#fff', borderRadius: '50%', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 8px rgba(0,0,0,0.12)', cursor: 'pointer', zIndex: 10 }}>
-              <Search size={18} color="#333" />
+            {/* Maximize/Zoom button */}
+            <div 
+              onClick={() => setIsLightboxOpen(true)}
+              title="Click to pop out full picture"
+              style={{ position: 'absolute', top: '1rem', left: '1rem', backgroundColor: '#fff', borderRadius: '50%', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 10px rgba(0,0,0,0.15)', cursor: 'pointer', zIndex: 10, transition: 'all 0.2s ease' }}
+            >
+              <Maximize2 size={18} color="#222" />
             </div>
 
             {/* Image Counter Badge */}
@@ -102,7 +118,9 @@ const ProductDetails = () => {
             <img 
               src={assetUrl(productImages[activeIndex])} 
               alt={`${product.title} view ${activeIndex + 1}`} 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.3s ease' }}
+              onClick={() => setIsLightboxOpen(true)}
+              title="Click to view full picture"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.3s ease', cursor: 'zoom-in' }}
             />
 
             {/* Left / Right Navigation Arrows */}
@@ -262,9 +280,185 @@ const ProductDetails = () => {
         />
       )}
 
+      {/* Fullscreen Image Pop-out (Lightbox Modal) */}
+      {isLightboxOpen && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.92)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '2rem'
+          }}
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          {/* Close Button */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
+            style={{
+              position: 'absolute',
+              top: '1.5rem',
+              right: '1.5rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.15)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '50%',
+              width: '48px',
+              height: '48px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              zIndex: 10000
+            }}
+            title="Close fullscreen view"
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
+          >
+            <X size={26} color="#fff" />
+          </button>
+
+          {/* Image Counter Badge in Lightbox */}
+          {productImages.length > 1 && (
+            <div style={{
+              position: 'absolute',
+              top: '2rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              color: '#fff',
+              backgroundColor: 'rgba(255, 255, 255, 0.18)',
+              padding: '0.35rem 1.2rem',
+              borderRadius: '24px',
+              fontSize: '0.9rem',
+              fontWeight: '500',
+              letterSpacing: '0.05em',
+              backdropFilter: 'blur(6px)'
+            }}>
+              {activeIndex + 1} / {productImages.length}
+            </div>
+          )}
+
+          {/* Full Uncropped Picture */}
+          <div 
+            onClick={(e) => e.stopPropagation()} 
+            style={{ position: 'relative', maxWidth: '85vw', maxHeight: '82vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <img 
+              src={assetUrl(productImages[activeIndex])} 
+              alt={`${product.title} fullscreen ${activeIndex + 1}`} 
+              style={{ maxHeight: '82vh', maxWidth: '85vw', objectFit: 'contain', borderRadius: '4px', boxShadow: '0 10px 40px rgba(0,0,0,0.6)', userSelect: 'none' }}
+            />
+          </div>
+
+          {/* Navigation arrows in Lightbox (fixed to viewport edges for easy clicking) */}
+          {productImages.length > 1 && (
+            <>
+              <button
+                onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                style={{
+                  position: 'absolute',
+                  left: '2rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  borderRadius: '50%',
+                  width: '54px',
+                  height: '54px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  zIndex: 10000,
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.35)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
+                aria-label="Previous image in lightbox"
+              >
+                <ChevronLeft size={32} color="#fff" />
+              </button>
+              <button
+                onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                style={{
+                  position: 'absolute',
+                  right: '2rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  borderRadius: '50%',
+                  width: '54px',
+                  height: '54px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  zIndex: 10000,
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.35)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
+                aria-label="Next image in lightbox"
+              >
+                <ChevronRight size={32} color="#fff" />
+              </button>
+            </>
+          )}
+
+          {/* Lightbox thumbnail indicator row at bottom */}
+          {productImages.length > 1 && (
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                position: 'absolute',
+                bottom: '1.5rem',
+                display: 'flex',
+                gap: '0.75rem',
+                padding: '0.5rem 1rem',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: '30px',
+                backdropFilter: 'blur(10px)'
+              }}
+            >
+              {productImages.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
+                  style={{
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    border: idx === activeIndex ? '2px solid #fff' : '2px solid transparent',
+                    opacity: idx === activeIndex ? 1 : 0.45,
+                    padding: 0,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <img src={assetUrl(img)} alt={`Thumb ${idx + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
     </div>
   );
 };
 
 export default ProductDetails;
+
 
