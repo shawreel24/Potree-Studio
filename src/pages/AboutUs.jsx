@@ -72,11 +72,13 @@ const AboutUs = () => {
               overflow: 'hidden',
               boxShadow: '0 20px 60px rgba(0,0,0,0.1)',
             }}>
-              <img
-                src={assetUrl('assets/images/about_sunny_workshop.webp')}
-                alt="The Pot Tree Studio workshop"
+              <video
+                src={assetUrl('assets/images/recents_workshop.mp4')}
+                autoPlay
+                loop
+                muted
+                playsInline
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                loading="lazy"
               />
             </div>
           </div>
