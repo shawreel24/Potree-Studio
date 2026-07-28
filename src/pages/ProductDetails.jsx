@@ -236,7 +236,7 @@ const ProductDetails = () => {
 
           <div className="flex flex-col gap-sm" style={{ marginTop: '1.5rem' }}>
             <Link 
-              to="/contact" 
+              to={`/inquire/${product.id}`} 
               className="btn btn-primary w-full text-center" 
               style={{ padding: '1rem', fontWeight: '500', backgroundColor: '#111', color: '#fff', textDecoration: 'none', display: 'block', borderRadius: '2px' }}
             >

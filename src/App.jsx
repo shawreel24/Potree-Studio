@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import ProductDetails from './pages/ProductDetails';
+import ProductInquiry from './pages/ProductInquiry';
 import PlaceholderPage from './pages/PlaceholderPage';
 import AboutUs from './pages/AboutUs';
 import Contact from './pages/Contact';
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/ceramics" element={<Products />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/inquire/:id" element={<ProductInquiry />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/developer" element={<Developer />} />
