@@ -29,7 +29,7 @@ const Products = () => {
         </div>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '2rem', marginTop: '2rem' }}>
+      <div className="products-grid">
         {products.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
